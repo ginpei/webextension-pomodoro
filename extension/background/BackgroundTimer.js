@@ -1,12 +1,21 @@
 // eslint-disable-next-line no-unused-vars
 class BackgroundTimer {
-  get running () {
+  get active () {
     return this.startedAt !== 0;
+  }
+
+  get running () {
+    return this.active && this._running;
+  }
+
+  get breaking () {
+    return this.active && this._breaking;
   }
 
   get remaining () {
     const elapsed = Date.now() - this.startedAt;
-    const remaining = this.settings.delay - elapsed;
+    const duration = this.running ? this.settings.runningDuration : this.settings.breakingDuration;
+    const remaining = duration - elapsed;
     return remaining >= 0 ? remaining : 0;
   }
 
@@ -14,51 +23,96 @@ class BackgroundTimer {
     this.tmNotify = 0;
     this.tmTick = 0;
     this.startedAt = 0;
+    this._running = false;
+    this._breaking = false;
 
     this.settings = {
-      delay: 3000,
+      runningDuration: 25 * 60 * 1000, // 25 min
+      breakingDuration: 5 * 60 * 1000, // 5 min
       title: 'Pomodoro',
       iconUrl: '/icons/icon-90.png',
       messages: {
         done: 'It\'s time!',
+        finishBreaking: 'OK. Let\'s rock!',
       },
     };
   }
 
   start () {
-    if (this.running) {
+    if (this.active) {
       return;
     }
 
     this.stop();
-
-    this.startedAt = Date.now();
-    this.tmNotify = setTimeout(() => {
-      this.notifyDone();
-      this.stop();
-    }, this.settings.delay);
-
+    this.startRunning();
     this.startTicking();
   }
 
   stop () {
-    if (!this.running) {
+    if (!this.active) {
       return;
     }
 
-    clearTimeout(this.tmNotify);
-    this.startedAt = 0;
+    if (this._running) {
+      this.stopRunning();
+    } else {
+      this.stopBreaking();
+    }
+
     this.stopTicking();
 
     this.tick();
   }
 
-  notifyDone () {
+  startRunning () {
+    this._running = true;
+    this.startedAt = Date.now();
+    this.tmNotify = setTimeout(() => {
+      this.notifyRunningDone();
+      this.stopRunning();
+
+      this.startBreaking();
+    }, this.settings.runningDuration);
+  }
+
+  stopRunning () {
+    this._running = false;
+    clearTimeout(this.tmNotify);
+    this.startedAt = 0;
+  }
+
+  notifyRunningDone () {
     browser.notifications.create({
       type: browser.notifications.TemplateType.BASIC,
       iconUrl: this.settings.iconUrl,
       title: this.settings.title,
       message: this.settings.messages.done,
+    });
+  }
+
+  startBreaking () {
+    this._breaking = true;
+    this.startedAt = Date.now();
+    this.tmNotify = setTimeout(() => {
+      this.notifyBreakingDone();
+      this.stopBreaking();
+
+      this.startRunning();
+    }, this.settings.breakingDuration);
+  }
+
+  stopBreaking () {
+    this._breaking = false;
+    clearTimeout(this.tmNotify);
+    this.startedAt = 0;
+  }
+
+  notifyBreakingDone () {
+    browser.notifications.create({
+      type: browser.notifications.TemplateType.BASIC,
+      iconUrl: this.settings.iconUrl,
+      title: this.settings.title,
+      message: this.settings.messages.finishBreaking,
     });
   }
 
@@ -77,7 +131,9 @@ class BackgroundTimer {
     browser.runtime.sendMessage({
       type: 'TIMER_TICK',
       remaining: this.remaining,
+      active: this.active,
       running: this.running,
+      breaking: this.breaking,
     });
   }
 }

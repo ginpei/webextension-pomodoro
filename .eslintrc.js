@@ -25,5 +25,11 @@ module.exports = {
         "props": false,
       }
     ],
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allowAfterThis": true,
+      },
+    ],
   },
 }

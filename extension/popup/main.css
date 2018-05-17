@@ -6,3 +6,16 @@ body {
   min-height: 300px;
   min-width: 300px;
 }
+
+.button-start,
+.button-stop {
+  display: none;
+}
+.button[data-active="true"] .button-stop,
+.button[data-active="false"] .button-start {
+  display: inline-block;
+}
+
+.remaining[data-active="false"] {
+  visibility: hidden;
+}
