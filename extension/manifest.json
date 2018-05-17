@@ -1,0 +1,44 @@
+{
+  "manifest_version": 2,
+  "name": "Pomodoro",
+  "version": "1.0.0",
+  "description": "Great timer app to work in pomodoro style",
+  "author": "Ginpei Takanashi",
+  "icons": {
+    "90": "icons/icon-90.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "browser_action": {
+    "default_icon": "icons/icon-90.png",
+    "default_title": "Pomodoro",
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "scripts": [
+      "vendor/webextension-polyfill/browser-polyfill.min.js",
+      "background/main.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/main.js"
+      ],
+      "css": [
+        "content_scripts/main.css"
+      ]
+    }
+  ],
+  "options_page": "options_ui/settings.html",
+  "options_ui": {
+    "page": "options_ui/settings.html",
+    "chrome_style": true
+  }
+}
