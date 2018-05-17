@@ -26,6 +26,10 @@ class BackgroundTimer {
   }
 
   start () {
+    if (this.running) {
+      return;
+    }
+
     this.stop();
 
     this.startedAt = Date.now();
@@ -38,6 +42,10 @@ class BackgroundTimer {
   }
 
   stop () {
+    if (!this.running) {
+      return;
+    }
+
     clearTimeout(this.tmNotify);
     this.startedAt = 0;
     this.stopTicking();
