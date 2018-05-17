@@ -127,13 +127,23 @@ class BackgroundTimer {
     clearTimeout(this.tmTick);
   }
 
-  tick () {
-    browser.runtime.sendMessage({
-      type: 'TIMER_TICK',
-      remaining: this.remaining,
-      active: this.active,
-      running: this.running,
-      breaking: this.breaking,
-    });
+  async tick () {
+    try {
+      await browser.runtime.sendMessage({
+        type: 'TIMER_TICK',
+        remaining: this.remaining,
+        active: this.active,
+        running: this.running,
+        breaking: this.breaking,
+      });
+    } catch (error) {
+      const expectedMessages = [
+        'The message port closed before a response was received.',
+        'Could not establish connection. Receiving end does not exist.',
+      ];
+      if (!expectedMessages.includes(error.message)) {
+        throw error;
+      }
+    }
   }
 }
