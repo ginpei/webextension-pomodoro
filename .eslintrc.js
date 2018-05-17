@@ -4,7 +4,13 @@ module.exports = {
     browser: true
   },
   extends: 'airbnb-base',
+  globals: {
+    "browser": false,
+  },
   rules: {
+    "class-methods-use-this": [
+      "off",
+    ],
     "comma-dangle": [
       "error",
       "always-multiline",
@@ -20,5 +26,4 @@ module.exports = {
       }
     ],
   },
-  globals: {},
 }
