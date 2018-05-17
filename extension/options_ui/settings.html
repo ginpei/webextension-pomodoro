@@ -5,8 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Pomodoro Settings</title>
+  <link rel="stylesheet" href="/options_ui/main.css">
 </head>
 <body>
-  <h1>Pomodoro Settings</h1>
+  <table class="settingsTable">
+    <caption>General</caption>
+    <tbody>
+      <tr>
+        <th>Running Time</th>
+        <td><input id="runningDurationMin" type="number" min="1" /> min</td>
+      </tr>
+      <tr>
+        <th>Breaking Time</th>
+        <td><input id="breakingDurationMin" type="number" min="1" /> min</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="settingsTable">
+    <caption>About</caption>
+    <tbody>
+      <tr>
+        <th>Author</th>
+        <td><a href="https://ginpei.info">Ginpei Takanashi</a></td>
+      </tr>
+      <tr>
+        <th>GitHub</th>
+        <td><a href="https://github.com/ginpei/webextension-pomodoro">ginpei/webextension-pomodoro</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <script src="/vendor/webextension-polyfill/browser-polyfill.min.js"></script>
+  <script src="/options_ui/SettingsPageController.js"></script>
+  <script src="/options_ui/main.js"></script>
 </body>
 </html>

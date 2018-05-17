@@ -31,6 +31,10 @@ class PopupController {
       this.stop();
     };
 
+    document.querySelector('#openSettings').onclick = () => {
+      this.openSettings();
+    };
+
     browser.runtime.onMessage.addListener((message) => {
       if (message.type === 'TIMER_TICK') {
         this.onTick(message);
@@ -56,6 +60,10 @@ class PopupController {
     browser.runtime.sendMessage({
       type: 'TIMER_STOP',
     });
+  }
+
+  openSettings () {
+    browser.runtime.openOptionsPage();
   }
 
   onTick (message) {
