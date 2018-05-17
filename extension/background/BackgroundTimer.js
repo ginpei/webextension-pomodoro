@@ -6,22 +6,22 @@ class BackgroundTimer {
 
   get remaining () {
     const elapsed = Date.now() - this.startedAt;
-    const remaining = this.delay - elapsed;
+    const remaining = this.settings.delay - elapsed;
     return remaining >= 0 ? remaining : 0;
   }
 
   constructor () {
-    // state
     this.tmNotify = 0;
     this.tmTick = 0;
     this.startedAt = 0;
 
-    // settings
-    this.delay = 3000;
-    this.title = 'Pomodoro';
-    this.iconUrl = '/icons/icon-90.png';
-    this.messages = {
-      done: 'It\'s time!',
+    this.settings = {
+      delay: 3000,
+      title: 'Pomodoro',
+      iconUrl: '/icons/icon-90.png',
+      messages: {
+        done: 'It\'s time!',
+      },
     };
   }
 
@@ -32,7 +32,7 @@ class BackgroundTimer {
     this.tmNotify = setTimeout(() => {
       this.notifyDone();
       this.stop();
-    }, this.delay);
+    }, this.settings.delay);
 
     this.startTicking();
   }
@@ -48,9 +48,9 @@ class BackgroundTimer {
   notifyDone () {
     browser.notifications.create({
       type: browser.notifications.TemplateType.BASIC,
-      iconUrl: this.iconUrl,
-      title: this.title,
-      message: this.messages.done,
+      iconUrl: this.settings.iconUrl,
+      title: this.settings.title,
+      message: this.settings.messages.done,
     });
   }
 
