@@ -1,7 +1,9 @@
-/* global BackgroundTimer */
+/* global Settings, BackgroundTimer */
 
-(() => {
-  const timer = new BackgroundTimer();
+(async () => {
+  const settings = new Settings();
+  await settings.load();
+  const timer = new BackgroundTimer(settings);
   browser.runtime.onMessage.addListener((message) => {
     if (message.type === 'TIMER_START') {
       timer.start();

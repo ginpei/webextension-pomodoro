@@ -19,23 +19,14 @@ class BackgroundTimer {
     return remaining >= 0 ? remaining : 0;
   }
 
-  constructor () {
+  constructor (settings) {
+    this.settings = settings;
+
     this.tmNotify = 0;
     this.tmTick = 0;
     this.startedAt = 0;
     this._running = false;
     this._breaking = false;
-
-    this.settings = {
-      runningDuration: 25 * 60 * 1000, // 25 min
-      breakingDuration: 5 * 60 * 1000, // 5 min
-      title: 'Pomodoro',
-      iconUrl: '/icons/icon-90.png',
-      messages: {
-        done: 'It\'s time!',
-        finishBreaking: 'OK. Let\'s rock!',
-      },
-    };
   }
 
   start () {

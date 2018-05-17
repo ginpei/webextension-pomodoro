@@ -1,6 +1,7 @@
-/* global SettingsPageController */
+/* global Settings, SettingsPageController */
 
 (() => {
-  const controller = new SettingsPageController();
+  const settings = new Settings();
+  const controller = new SettingsPageController({ settings });
   controller.start();
 })();

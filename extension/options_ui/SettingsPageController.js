@@ -1,33 +1,33 @@
 // eslint-disable-next-line no-unused-vars
 class SettingsPageController {
-  constructor () {
+  constructor ({ settings }) {
+    this.settings = settings;
+
     this.elRunningDurationMin = document.querySelector('#runningDurationMin');
     this.elBreakingDurationMin = document.querySelector('#breakingDurationMin');
-
-    this.runningDurationMin = 25;
-    this.breakingDurationMin = 5;
   }
 
-  start () {
+  async start () {
     this.elRunningDurationMin.oninput = () => {
-      const runningDurationMin = this.elRunningDurationMin.value;
-      this.updateValues({ runningDurationMin });
+      this.save();
     };
 
     this.elBreakingDurationMin.oninput = () => {
-      const breakingDurationMin = this.elBreakingDurationMin.value;
-      this.updateValues({ breakingDurationMin });
+      this.save();
     };
 
+    await this.settings.load();
     this.render();
   }
 
   render () {
-    this.elRunningDurationMin.value = this.runningDurationMin;
-    this.elBreakingDurationMin.value = this.breakingDurationMin;
+    this.elRunningDurationMin.value = this.settings.runningDurationMin;
+    this.elBreakingDurationMin.value = this.settings.breakingDurationMin;
   }
 
-  async updateValues (values) {
-    console.log('# values', values);
+  async save () {
+    this.settings.runningDurationMin = Number(this.elRunningDurationMin.value);
+    this.settings.breakingDurationMin = Number(this.elBreakingDurationMin.value);
+    this.settings.save();
   }
 }
