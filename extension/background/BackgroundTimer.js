@@ -153,14 +153,12 @@ class BackgroundTimer {
     if (this.active) {
       this.chartRenderer.progress = this.progress;
       this.chartRenderer.render();
-      browser.browserAction.setIcon({
-        imageData: this.chartRenderer.getImageData(),
-      });
+      const imageData = this.chartRenderer.getImageData();
+      browser.browserAction.setIcon({ imageData });
     } else {
       const manifest = browser.runtime.getManifest();
-      browser.browserAction.setIcon({
-        path: `/${manifest.browser_action.default_icon}`,
-      });
+      const path = browser.extension.getURL(manifest.browser_action.default_icon);
+      browser.browserAction.setIcon({ path });
     }
   }
 }
