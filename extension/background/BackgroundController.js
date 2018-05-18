@@ -15,8 +15,6 @@ class BackgroundController {
     this.chartRenderer = new ChartRenderer({ el: this.elCanvas });
     this.settings = new Settings();
     await this.settings.load();
-    this.settings.runningDuration = 3000;
-    this.settings.breakingDuration = 3000;
     this.timer = new PomodoroTimer(this.settings, this.chartRenderer);
 
     this.timer.onTick = () => {
