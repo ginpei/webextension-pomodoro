@@ -117,8 +117,8 @@ class BackgroundTimer {
   }
 
   startTicking () {
-    this.tmTick = setTimeout(() => {
       this.tick();
+    this.tmTick = setTimeout(() => {
       this.startTicking();
     }, 100);
   }
