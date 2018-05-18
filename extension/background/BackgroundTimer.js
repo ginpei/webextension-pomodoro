@@ -12,15 +12,24 @@ class BackgroundTimer {
     return this.active && this._breaking;
   }
 
+  get duration () {
+    const s = this.settings;
+    return this.running ? s.runningDuration : s.breakingDuration;
+  }
+
   get remaining () {
     const elapsed = Date.now() - this.startedAt;
-    const duration = this.running ? this.settings.runningDuration : this.settings.breakingDuration;
-    const remaining = duration - elapsed;
+    const remaining = this.duration - elapsed;
     return remaining >= 0 ? remaining : 0;
   }
 
-  constructor (settings) {
+  get progress () {
+    return 1 - (this.remaining / this.duration);
+  }
+
+  constructor (settings, chartRenderer) {
     this.settings = settings;
+    this.chartRenderer = chartRenderer;
 
     this.tmNotify = 0;
     this.tmTick = 0;
@@ -119,6 +128,8 @@ class BackgroundTimer {
   }
 
   async tick () {
+    this.updateActionButtonIcon();
+
     try {
       await browser.runtime.sendMessage({
         type: 'TIMER_TICK',
@@ -135,6 +146,21 @@ class BackgroundTimer {
       if (!expectedMessages.includes(error.message)) {
         throw error;
       }
+    }
+  }
+
+  updateActionButtonIcon () {
+    if (this.active) {
+      this.chartRenderer.progress = this.progress;
+      this.chartRenderer.render();
+      browser.browserAction.setIcon({
+        imageData: this.chartRenderer.getImageData(),
+      });
+    } else {
+      const manifest = browser.runtime.getManifest();
+      browser.browserAction.setIcon({
+        path: `/${manifest.browser_action.default_icon}`,
+      });
     }
   }
 }
