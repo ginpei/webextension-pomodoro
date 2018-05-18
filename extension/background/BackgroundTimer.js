@@ -131,14 +131,15 @@ class BackgroundTimer {
   async tick () {
     this.updateActionButtonIcon();
 
+    const message = {
+      type: 'TIMER_TICK',
+      remaining: this.remaining,
+      active: this.active,
+      running: this.running,
+      breaking: this.breaking,
+    };
     try {
-      await browser.runtime.sendMessage({
-        type: 'TIMER_TICK',
-        remaining: this.remaining,
-        active: this.active,
-        running: this.running,
-        breaking: this.breaking,
-      });
+      await browser.runtime.sendMessage(message);
     } catch (error) {
       const expectedMessages = [
         'The message port closed before a response was received.',
