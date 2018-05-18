@@ -80,7 +80,7 @@ class BackgroundController {
     }
   }
 
-  notifyStatusChange () {
+  async notifyStatusChange () {
     const m = this.settings.messages;
 
     const { status } = this.timer;
@@ -94,11 +94,21 @@ class BackgroundController {
     }
     this.lastTimerStatus = status;
 
-    browser.notifications.create({
+    const id = await browser.notifications.create({
       type: browser.notifications.TemplateType.BASIC,
       iconUrl: this.settings.iconUrl,
       title: this.settings.title,
       message,
     });
+
+    const clear = (targetId) => {
+      if (targetId === id) {
+        browser.notifications.clear(id);
+        browser.notifications.onClicked.removeListener(clear);
+      }
+    };
+    browser.notifications.onClicked.addListener(clear);
+
+    return id;
   }
 }
