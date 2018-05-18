@@ -28,8 +28,10 @@ class Settings {
     this.title = 'Pomodoro';
     this.iconUrl = '/icons/icon-90.png';
     this.messages = {
-      done: 'It\'s time!',
+      finishRunning: 'Well done! Please have a break.',
       finishBreaking: 'OK. Let\'s rock!',
+      start: 'Start!',
+      stop: 'Stop. Good job!',
     };
   }
 
