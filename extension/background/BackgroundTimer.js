@@ -36,6 +36,7 @@ class BackgroundTimer {
     this.startedAt = 0;
     this._running = false;
     this._breaking = false;
+    this.renderedProgress = -1;
   }
 
   start () {
@@ -117,7 +118,7 @@ class BackgroundTimer {
   }
 
   startTicking () {
-      this.tick();
+    this.tick();
     this.tmTick = setTimeout(() => {
       this.startTicking();
     }, 100);
@@ -151,11 +152,18 @@ class BackgroundTimer {
 
   updateActionButtonIcon () {
     if (this.active) {
-      this.chartRenderer.progress = this.progress;
-      this.chartRenderer.render();
-      const imageData = this.chartRenderer.getImageData();
-      browser.browserAction.setIcon({ imageData });
+      const roundedProgress = Math.floor(this.progress * 100) / 100;
+      if (roundedProgress !== this.renderedProgress) {
+        this.renderedProgress = roundedProgress;
+        this.chartRenderer.progress = roundedProgress;
+
+        this.chartRenderer.render();
+        const imageData = this.chartRenderer.getImageData();
+        browser.browserAction.setIcon({ imageData });
+      }
     } else {
+      this.renderedProgress = -1;
+
       const manifest = browser.runtime.getManifest();
       const path = browser.extension.getURL(manifest.browser_action.default_icon);
       browser.browserAction.setIcon({ path });
