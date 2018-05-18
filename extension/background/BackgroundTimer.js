@@ -130,25 +130,7 @@ class BackgroundTimer {
 
   async tick () {
     this.updateActionButtonIcon();
-
-    const message = {
-      type: 'TIMER_TICK',
-      remaining: this.remaining,
-      active: this.active,
-      running: this.running,
-      breaking: this.breaking,
-    };
-    try {
-      await browser.runtime.sendMessage(message);
-    } catch (error) {
-      const expectedMessages = [
-        'The message port closed before a response was received.',
-        'Could not establish connection. Receiving end does not exist.',
-      ];
-      if (!expectedMessages.includes(error.message)) {
-        throw error;
-      }
-    }
+    this.sendTickMessage();
   }
 
   updateActionButtonIcon () {
@@ -168,6 +150,27 @@ class BackgroundTimer {
       const manifest = browser.runtime.getManifest();
       const path = browser.extension.getURL(manifest.browser_action.default_icon);
       browser.browserAction.setIcon({ path });
+    }
+  }
+
+  async sendTickMessage () {
+    const message = {
+      type: 'TIMER_TICK',
+      remaining: this.remaining,
+      active: this.active,
+      running: this.running,
+      breaking: this.breaking,
+    };
+    try {
+      await browser.runtime.sendMessage(message);
+    } catch (error) {
+      const expectedMessages = [
+        'The message port closed before a response was received.',
+        'Could not establish connection. Receiving end does not exist.',
+      ];
+      if (!expectedMessages.includes(error.message)) {
+        throw error;
+      }
     }
   }
 }
