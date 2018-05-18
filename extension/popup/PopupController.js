@@ -31,7 +31,8 @@ class PopupController {
       this.stop();
     };
 
-    document.querySelector('#openSettings').onclick = () => {
+    document.querySelector('#openSettings').onclick = (event) => {
+      event.preventDefault();
       this.openSettings();
     };
 
