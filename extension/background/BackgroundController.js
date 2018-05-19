@@ -9,6 +9,7 @@ class BackgroundController {
     this.lastTimerStatus = PomodoroTimer.prototype.STATUS_OFF;
 
     this.elCanvas = document.querySelector('#chartRenderer');
+    this.elChime = document.querySelector('#chime');
   }
 
   async start () {
@@ -84,11 +85,13 @@ class BackgroundController {
     const m = this.settings.messages;
 
     const { status } = this.timer;
+    let switchedRunningMode = false;
     let message;
     if (this.lastTimerStatus === this.timer.STATUS_OFF) {
       message = m.start;
     } else if (this.timer.active) {
       message = this.timer.running ? m.finishBreaking : m.finishRunning;
+      switchedRunningMode = true;
     } else {
       message = m.stop;
     }
@@ -109,6 +112,14 @@ class BackgroundController {
     };
     browser.notifications.onClicked.addListener(clear);
 
+    if (switchedRunningMode) {
+      this.playChime();
+    }
+
     return id;
+  }
+
+  playChime () {
+    this.elChime.play();
   }
 }
