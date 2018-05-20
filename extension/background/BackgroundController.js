@@ -133,6 +133,7 @@ class BackgroundController {
       if (targetId === id) {
         browser.notifications.clear(id);
         browser.notifications.onClicked.removeListener(clear);
+        this.stopChime();
       }
     };
     browser.notifications.onClicked.addListener(clear);
@@ -152,5 +153,10 @@ class BackgroundController {
     const chime = this.elChime;
     chime.volume = this.settings.chimeVolume / 100;
     chime.play();
+  }
+
+  stopChime () {
+    this.elChime.pause();
+    this.elChime.currentTime = 0;
   }
 }
