@@ -20,6 +20,7 @@ class BackgroundController {
 
     this.timer.onTick = () => {
       this.updateActionButtonIcon();
+      this.updateActionButtonText();
       this.sendTickMessage();
     };
 
@@ -60,6 +61,26 @@ class BackgroundController {
       const path = browser.extension.getURL(manifest.browser_action.default_icon);
       browser.browserAction.setIcon({ path });
     }
+  }
+
+  updateActionButtonText () {
+    const { timer } = this;
+
+    const min5 = 5 * 60 * 1000;
+    const min1 = 1 * 60 * 1000;
+    let text = '';
+    const { remaining } = timer;
+    if (timer.active && remaining < min5) {
+      if (remaining < min1) {
+        text = `.${Math.ceil(remaining / 1000)}`;
+      } else {
+        text = Math.ceil(remaining / 60 / 1000).toString();
+      }
+    } else {
+      text = '';
+    }
+
+    browser.browserAction.setBadgeText({ text });
   }
 
   async sendTickMessage () {
