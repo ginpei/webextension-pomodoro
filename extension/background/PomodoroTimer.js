@@ -34,6 +34,11 @@ class PomodoroTimer {
   constructor (settings) {
     this.settings = settings;
 
+    // event handlers
+    this.onStatusChange = null;
+    this.onTick = null;
+
+    // status
     this.tmNotify = 0;
     this.tmTick = 0;
     this.duration = 0;
