@@ -108,9 +108,23 @@ describe('PomodoroTimer', () => {
       expect(timer.active).to.eql(false);
     });
 
-    it('stops running if running');
+    it('stops running if running', () => {
+      timer.start();
+      expect(timer.running).to.eql(true);
+      timer.stop();
 
-    it('stops breaking if breaking');
+      expect(timer.running).to.eql(false);
+    });
+
+    it('stops breaking if breaking', () => {
+      timer.start();
+      timer.stopTicking(); // illegal but makes test faster
+      clock.tick(min25);
+      expect(timer.breaking).to.eql(true);
+      timer.stop();
+
+      expect(timer.breaking).to.eql(false);
+    });
 
     it('calls the last tick event listener', () => {
       const spy = timer.onTick;
@@ -125,6 +139,9 @@ describe('PomodoroTimer', () => {
       expect(spy).to.have.been.callCount(0);
     });
 
-    it('emits status change');
+    it('calls status change event handler', () => {
+      const spy = timer.onStatusChange;
+      expect(spy).to.have.been.callCount(1);
+    });
   });
 });
