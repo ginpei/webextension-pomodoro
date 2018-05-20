@@ -35,9 +35,9 @@ class Settings {
     this.iconUrl = '/icons/icon-90.png';
     this.messages = {
       finishRunning: 'Well done! Please have a break.',
-      finishBreaking: 'OK. Let\'s rock!',
-      start: 'Start!',
-      stop: 'Stop. Good job!',
+      finishBreaking: 'It\'s time to work.',
+      start: 'Let\'s rock!',
+      stop: 'Good job!',
     };
   }
 
