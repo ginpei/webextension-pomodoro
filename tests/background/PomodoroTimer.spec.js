@@ -84,8 +84,8 @@ describe('PomodoroTimer', () => {
       clock = sinon.useFakeTimers(new Date());
       timer.onStatusChange = sinon.spy();
       timer.onTick = sinon.spy();
-      timer.start();
 
+      timer.start();
       timer.onStatusChange.resetHistory();
       timer.onTick.resetHistory();
 
