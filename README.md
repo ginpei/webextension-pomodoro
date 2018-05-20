@@ -31,4 +31,5 @@ I'm waiting for your PR to make this look nicer. :)
 
 - Ginpei Takanashi
 - Twitter [@ginpei_en](http://twitter.com/ginpei_en)
+- GitHub [@ginpei](https://github.com/ginpei/)
 - [Ginpei.info](https://ginpei.info/#/)
