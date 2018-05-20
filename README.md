@@ -1,5 +1,6 @@
 # WebExtension Pomodoro Timer Example
 
+[![Build Status](https://travis-ci.org/ginpei/webextension-pomodoro.svg?branch=master)](https://travis-ci.org/ginpei/webextension-pomodoro)
 [![Greenkeeper badge](https://badges.greenkeeper.io/ginpei/webextension-pomodoro.svg)](https://greenkeeper.io/)
 
 I'm waiting for your PR to make this look nicer. :)
