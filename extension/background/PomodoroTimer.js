@@ -21,11 +21,6 @@ class PomodoroTimer {
     return this.active && this._breaking;
   }
 
-  get duration () {
-    const s = this.settings;
-    return this.running ? s.runningDuration : s.breakingDuration;
-  }
-
   get remaining () {
     const elapsed = Date.now() - this.startedAt;
     const remaining = this.duration - elapsed;
@@ -41,6 +36,7 @@ class PomodoroTimer {
 
     this.tmNotify = 0;
     this.tmTick = 0;
+    this.duration = 0;
     this.startedAt = 0;
     this._running = false;
     this._breaking = false;
@@ -77,6 +73,7 @@ class PomodoroTimer {
   startRunning () {
     this._running = true;
     this.startedAt = Date.now();
+    this.duration = this.settings.runningDuration;
     this.tmNotify = setTimeout(() => {
       this.stopRunning();
       this.startBreaking();
@@ -89,11 +86,13 @@ class PomodoroTimer {
     this._running = false;
     clearTimeout(this.tmNotify);
     this.startedAt = 0;
+    this.duration = 0;
   }
 
   startBreaking () {
     this._breaking = true;
     this.startedAt = Date.now();
+    this.duration = this.settings.breakingDuration;
     this.tmNotify = setTimeout(() => {
       this.stopBreaking();
       this.startRunning();
@@ -106,6 +105,7 @@ class PomodoroTimer {
     this._breaking = false;
     clearTimeout(this.tmNotify);
     this.startedAt = 0;
+    this.duration = 0;
   }
 
   startTicking () {
