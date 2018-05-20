@@ -1,5 +1,7 @@
 # WebExtension Pomodoro Timer Example
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ginpei/webextension-pomodoro.svg)](https://greenkeeper.io/)
+
 I'm waiting for your PR to make this look nicer. :)
 
 ## What you can learn from this
