@@ -10,31 +10,38 @@ class ChartRenderer {
     this.progress = 0;
     this.settings = {
       colors: {
-        bg: 'tomato',
-        fg: 'green',
+        runningFore: 'tomato',
+        runningBack: 'khaki',
+        breakingFore: 'teal',
+        breakingBack: 'khaki',
       },
     };
   }
 
-  render () {
+  render (status = {}) {
     const { ctx } = this;
+    const { colors } = this.settings;
     const { width, height } = ctx.canvas;
+    const { running } = status;
 
     const x = width / 2;
     const y = height / 2;
-    const radius = Math.min(x, y);
+    const outerRadius = Math.min(x, y);
+    const innerRadius = outerRadius * 0.4;
     const allAngle = 2 * Math.PI;
     const startAngle = allAngle * (-1 / 4);
     const progressAngle = startAngle + (allAngle * (1 - this.progress));
 
     ctx.beginPath();
-    ctx.fillStyle = this.settings.colors.bg;
-    ctx.arc(x, y, radius, startAngle, allAngle);
+    ctx.fillStyle = running ? colors.runningBack : colors.breakingBack;
+    ctx.arc(x, y, outerRadius, startAngle, allAngle, false);
+    ctx.arc(x, y, innerRadius, allAngle, startAngle, true);
     ctx.fill();
 
     ctx.beginPath();
-    ctx.fillStyle = this.settings.colors.fg;
-    ctx.arc(x, y, radius, startAngle, progressAngle);
+    ctx.fillStyle = running ? colors.runningFore : colors.breakingFore;
+    ctx.arc(x, y, outerRadius, startAngle, progressAngle, false);
+    ctx.arc(x, y, innerRadius, progressAngle, startAngle, true);
     ctx.lineTo(x, y);
     ctx.fill();
   }

@@ -49,7 +49,7 @@ class BackgroundController {
         this.renderedProgress = roundedProgress;
         chartRenderer.progress = roundedProgress;
 
-        chartRenderer.render();
+        chartRenderer.render({ running: this.timer.running });
         const imageData = chartRenderer.getImageData();
         browser.browserAction.setIcon({ imageData });
       }
