@@ -18,7 +18,13 @@ class Settings {
     return {
       runningDuration: 25 * 60 * 1000, // 25 min
       breakingDuration: 5 * 60 * 1000, // 5 min
+      playChime: true,
+      chimeVolume: 100,
     };
+  }
+
+  get version () {
+    return browser.runtime.getManifest().version;
   }
 
   constructor () {
@@ -39,17 +45,24 @@ class Settings {
     const keys = [
       'runningDuration',
       'breakingDuration',
+      'playChime',
+      'chimeVolume',
     ];
     const values = await browser.storage.local.get(keys);
     const defaults = this.defaultValues;
     this.runningDuration = values.runningDuration || defaults.runningDuration;
     this.breakingDuration = values.breakingDuration || defaults.breakingDuration;
+    this.playChime = 'playChime' in values ? values.playChime : defaults.playChime;
+    this.chimeVolume = 'chimeVolume' in values ? values.chimeVolume : defaults.chimeVolume;
   }
 
   async save () {
     const keys = {
       runningDuration: this.runningDuration,
       breakingDuration: this.breakingDuration,
+      playChime: this.playChime,
+      chimeVolume: this.chimeVolume,
+      version: this.version,
     };
     await browser.storage.local.set(keys);
   }

@@ -31,3 +31,9 @@ body {
 .settingsTable textarea {
   width: 100%;
 }
+
+#chimeVolumeValue {
+  display: inline-block;
+  text-align: right;
+  width: 2em;
+}
