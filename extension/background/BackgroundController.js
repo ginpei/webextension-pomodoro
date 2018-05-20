@@ -27,6 +27,10 @@ class BackgroundController {
       this.notifyStatusChange();
     };
 
+    browser.storage.onChanged.addListener(() => {
+      this.settings.load();
+    });
+
     browser.runtime.onMessage.addListener((message) => {
       if (message.type === 'TIMER_START') {
         this.timer.start();
@@ -120,6 +124,12 @@ class BackgroundController {
   }
 
   playChime () {
-    this.elChime.play();
+    if (!this.settings.playChime) {
+      return;
+    }
+
+    const chime = this.elChime;
+    chime.volume = this.settings.chimeVolume / 100;
+    chime.play();
   }
 }
