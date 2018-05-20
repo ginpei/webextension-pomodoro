@@ -13,7 +13,7 @@ I'm waiting for your PR to make this look nicer. :)
 - Badge text on the toolbar button
 - Keep scripts working in background
 - Let popup script run background script
-- Send message from background to popup
+- Send messages from background to popup
 - Replace popup icon with existing PNG file
 - Replace popup icon with Canvas image created by script
 - Render progress chart using Canvas
@@ -24,7 +24,11 @@ I'm waiting for your PR to make this look nicer. :)
 - Notification
 - Handle clicking on notifications
 - Play sounds
-- Tests for primitive scripts using mocha and testem
+- Tests for primitive scripts using [Mocha](https://mochajs.org/) and [Test'em](https://github.com/testem/testem)
+- Run tests using [Travis-CI](https://travis-ci.org/) whenever you pushed
+- Keep dependencies fresh using [Greenkeeper](https://greenkeeper.io/)
+- Lint scripts using [ESLint](https://eslint.org/)
+- Add ESLint settings only for test scripts
 
 ## License
 
