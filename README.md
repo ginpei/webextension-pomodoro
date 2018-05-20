@@ -21,6 +21,7 @@ I'm waiting for your PR to make this look nicer. :)
 - Notification
 - Handle clicking on notifications
 - Play sounds
+- Tests for primitive scripts using mocha and testem
 
 ## License
 
