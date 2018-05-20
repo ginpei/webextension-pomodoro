@@ -53,11 +53,21 @@ describe('PomodoroTimer', () => {
       expect(spy).to.have.been.callCount(1);
     });
 
-    it('stops later', () => {
+    it('starts breaking later', () => {
       timer.stopTicking(); // illegal but makes test faster
 
       clock.tick(min25);
       expect(timer.running).to.eql(false);
+      expect(timer.breaking).to.eql(true);
+    });
+
+    it('restarts running after breaking', () => {
+      timer.stopTicking(); // illegal but makes test faster
+
+      clock.tick(min25);
+      clock.tick(min5);
+      expect(timer.running).to.eql(true);
+      expect(timer.breaking).to.eql(false);
     });
 
     it('calls tick event listener many times', () => {
@@ -65,5 +75,56 @@ describe('PomodoroTimer', () => {
       const spy = timer.onTick;
       expect(spy).to.have.been.callCount(11);
     });
+  });
+
+  describe('stop()', () => {
+    let clock;
+
+    beforeEach(() => {
+      clock = sinon.useFakeTimers(new Date());
+      timer.onStatusChange = sinon.spy();
+      timer.onTick = sinon.spy();
+      timer.start();
+
+      timer.onStatusChange.resetHistory();
+      timer.onTick.resetHistory();
+
+      timer.stop();
+    });
+
+    // afterEach(() => {
+    //   timer.stop();
+    // });
+
+    it('do nothing if not active', () => {
+      const spy = timer.onStatusChange;
+      spy.resetHistory();
+      timer.stop();
+
+      expect(spy).to.have.been.callCount(0);
+    });
+
+    it('becomes inactive', () => {
+      expect(timer.active).to.eql(false);
+    });
+
+    it('stop running if running');
+
+    it('stop breaking if breaking');
+
+    it('calls the last tick event listener', () => {
+      const spy = timer.onTick;
+      expect(spy).to.have.been.callCount(1);
+    });
+
+    it('stop ticking', () => {
+      const spy = timer.onTick;
+      spy.resetHistory();
+      clock.tick(min5);
+
+      expect(spy).to.have.been.callCount(0);
+    });
+
+    it('emit status change');
   });
 });
