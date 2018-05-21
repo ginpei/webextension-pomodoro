@@ -46,7 +46,6 @@ class ScheduleChart {
         breakingDuration = status.duration;
       }
     }
-    console.log(`# ${runningDuration}, ${breakingDuration}`);
 
     const wholeDuration = runningDuration + breakingDuration;
     const wholeElapsed = running ? elapsed : runningDuration + elapsed;
