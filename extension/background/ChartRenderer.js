@@ -32,12 +32,14 @@ class ChartRenderer {
     const startAngle = allAngle * (-1 / 4);
     const progressAngle = startAngle + (allAngle * (1 - this.progress));
 
+    // back
     ctx.beginPath();
     ctx.fillStyle = running ? colors.runningBack : colors.breakingBack;
     ctx.arc(x, y, outerRadius, startAngle, allAngle, false);
     ctx.arc(x, y, innerRadius, allAngle, startAngle, true);
     ctx.fill();
 
+    // remaining
     ctx.beginPath();
     ctx.fillStyle = running ? colors.runningFore : colors.breakingFore;
     ctx.arc(x, y, outerRadius, startAngle, progressAngle, false);
