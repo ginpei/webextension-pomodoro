@@ -89,6 +89,7 @@ class BackgroundController {
     const message = {
       type: 'TIMER_TICK',
       remaining: timer.remaining,
+      duration: timer.duration,
       active: timer.active,
       running: timer.running,
       breaking: timer.breaking,
