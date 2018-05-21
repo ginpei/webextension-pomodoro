@@ -38,6 +38,9 @@ class PomodoroTimer {
     this.onStatusChange = null;
     this.onTick = null;
 
+    // settings
+    this.tickInterval = 100;
+
     // status
     this.tmNotify = 0;
     this.tmTick = 0;
@@ -117,7 +120,7 @@ class PomodoroTimer {
     this.emitTick();
     this.tmTick = setTimeout(() => {
       this.startTicking();
-    }, 100);
+    }, this.tickInterval);
   }
 
   stopTicking () {
