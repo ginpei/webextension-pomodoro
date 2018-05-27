@@ -1,3 +1,5 @@
+/* globals ScheduleChart */
+
 // eslint-disable-next-line no-unused-vars
 class PopupController {
   get remainingSeconds () {
@@ -11,7 +13,8 @@ class PopupController {
     return 'Off';
   }
 
-  constructor () {
+  constructor (settings) {
+    this.settings = settings;
     this.active = false;
     this.running = false;
     this.remaining = 0;
@@ -22,7 +25,9 @@ class PopupController {
     this.elRemaining = document.querySelector('#remaining');
   }
 
-  init () {
+  async init () {
+    this.initChart();
+
     document.querySelector('#start').onclick = () => {
       this.start();
     };
@@ -41,6 +46,24 @@ class PopupController {
         this.onTick(message);
       }
     });
+
+    browser.storage.onChanged.addListener(async () => {
+      await this.settings.load();
+    });
+
+    await this.settings.load();
+  }
+
+  initChart () {
+    this.chart = new ScheduleChart({
+      el: document.querySelector('#scheduleChart'),
+    });
+
+    browser.runtime.onMessage.addListener((message) => {
+      if (message.type === 'TIMER_TICK') {
+        this.renderChart(message);
+      }
+    });
   }
 
   render () {
@@ -49,6 +72,20 @@ class PopupController {
 
     this.elStatus.textContent = this.statusText;
     this.elRemaining.textContent = `${this.remainingSeconds} s`;
+  }
+
+  renderChart (message) {
+    const { chart } = this;
+    const { runningDuration, breakingDuration } = this.settings;
+    const { duration } = message;
+    chart.render({
+      runningDuration,
+      breakingDuration,
+      active: message.active,
+      running: message.running,
+      duration,
+      elapsed: duration - message.remaining,
+    });
   }
 
   start () {

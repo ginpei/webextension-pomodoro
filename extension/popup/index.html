@@ -9,6 +9,7 @@
 </head>
 <body>
   <div>
+    <canvas id="scheduleChart" width="200" height="200" viewbox="0 0 200 200"></canvas>
     <div class="button" data-active="false">
       <button id="start" class="button-start">Start Pomodoro</button>
       <button id="stop" class="button-stop">Stop Pomodoro</button>
@@ -24,6 +25,8 @@
     </div>
   </div>
   <script src="/vendor/webextension-polyfill/browser-polyfill.min.js"></script>
+  <script src="/lib/Settings.js"></script>
+  <script src="/popup/ScheduleChart.js"></script>
   <script src="/popup/PopupController.js"></script>
   <script src="/popup/main.js"></script>
 </body>

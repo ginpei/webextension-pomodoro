@@ -12,6 +12,7 @@ class ScheduleChart {
         // runningBack: 'khaki',
         breakingFore: 'teal',
         // breakingBack: 'khaki',
+        progress: 'khaki',
       },
     };
   }
@@ -33,6 +34,7 @@ class ScheduleChart {
       runningDuration,
       breakingDuration,
     } = status;
+    console.log('# status', runningDuration, breakingDuration);
     const {
       active,
       running,
@@ -77,13 +79,21 @@ class ScheduleChart {
 
     // progress
     if (active) {
-      const x1 = x0 + (radius * Math.cos(progressAngle));
-      const y1 = y0 + (radius * Math.sin(progressAngle));
       ctx.beginPath();
-      ctx.strokeStyle = 'black';
-      ctx.moveTo(x0, y0);
-      ctx.lineTo(x1, y1);
-      ctx.stroke();
+      ctx.fillStyle = colors.progress;
+      const progressOuterRadius = radius * 0.95;
+      const progressInnerRadius = innerRadius * 1.05;
+      ctx.arc(x0, y0, progressOuterRadius, startAngle, progressAngle, false);
+      ctx.arc(x0, y0, progressInnerRadius, progressAngle, startAngle, true);
+      ctx.fill();
+
+      // const x1 = x0 + (radius * Math.cos(progressAngle));
+      // const y1 = y0 + (radius * Math.sin(progressAngle));
+      // ctx.beginPath();
+      // ctx.strokeStyle = 'black';
+      // ctx.moveTo(x0, y0);
+      // ctx.lineTo(x1, y1);
+      // ctx.stroke();
     }
   }
 }

@@ -1,5 +1,3 @@
-/* globals ScheduleChart */
-
 // eslint-disable-next-line no-unused-vars
 class SettingsPageController {
   constructor ({ settings }) {
@@ -13,8 +11,6 @@ class SettingsPageController {
   }
 
   async start () {
-    this.chart();
-
     this.elRunningDurationMin.oninput = () => {
       this.save();
     };
@@ -35,30 +31,6 @@ class SettingsPageController {
 
     await this.settings.load();
     this.render();
-  }
-
-  // TODO move to popup maybe
-  chart () {
-    const chart = new ScheduleChart({
-      el: document.querySelector('#scheduleChart'),
-    });
-
-    browser.runtime.onMessage.addListener((message) => {
-      if (!message.type === 'TIMER_TICK') {
-        return;
-      }
-
-      const { runningDuration, breakingDuration } = this.settings;
-      const { duration } = message;
-      chart.render({
-        runningDuration,
-        breakingDuration,
-        active: message.active,
-        running: message.running,
-        duration,
-        elapsed: duration - message.remaining,
-      });
-    });
   }
 
   render () {
