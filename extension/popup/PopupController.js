@@ -87,7 +87,7 @@ class PopupController {
       active: 'active' in message ? message.active : this.active,
       running: 'running' in message ? message.running : this.running,
       duration,
-      elapsed: 'elapsed' in message ? duration - message.remaining : 0,
+      elapsed: 'remaining' in message ? duration - message.remaining : 0,
     });
   }
 
