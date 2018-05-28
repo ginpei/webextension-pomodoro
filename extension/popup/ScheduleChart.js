@@ -53,15 +53,45 @@ class ScheduleChart {
     const wholeDuration = runningDuration + breakingDuration;
     const wholeElapsed = running ? elapsed : runningDuration + elapsed;
     const progress = wholeElapsed / wholeDuration;
-
     const innerRadius = radius * 0.8;
-
     const allAngle = 2 * Math.PI;
     const startAngle = allAngle * (-1 / 4);
     const runningAngle = startAngle + (allAngle * (runningDuration / wholeDuration));
     const progressAngle = startAngle + (allAngle * progress);
-
     const { width, height } = ctx.canvas;
+
+    this.drawChart({
+      active,
+      colors,
+      ctx,
+      height,
+      innerRadius,
+      progressAngle,
+      radius,
+      runningAngle,
+      startAngle,
+      width,
+      x0,
+      y0,
+    });
+  }
+
+  drawChart (params) {
+    const {
+      active,
+      colors,
+      ctx,
+      height,
+      innerRadius,
+      progressAngle,
+      radius,
+      runningAngle,
+      startAngle,
+      width,
+      x0,
+      y0,
+    } = params;
+
     ctx.clearRect(0, 0, width, height);
 
     // running
