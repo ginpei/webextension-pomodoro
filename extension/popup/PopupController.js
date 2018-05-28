@@ -57,6 +57,7 @@ class PopupController {
     });
 
     await this.settings.load();
+    this.renderChart();
   }
 
   initChart () {
