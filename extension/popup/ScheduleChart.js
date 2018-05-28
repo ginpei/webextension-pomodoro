@@ -19,6 +19,10 @@ class ScheduleChart {
    * @param {object} status
    * @param {number} status.runningDuration
    * @param {number} status.breakingDuration
+   * @param {boolean} status.active
+   * @param {boolean} status.running
+   * @param {number} status.elapsed
+   * @param {number} status.duration
    */
   render (status) {
     const { ctx } = this;
