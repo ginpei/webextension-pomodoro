@@ -49,6 +49,11 @@ class PopupController {
 
     browser.storage.onChanged.addListener(async () => {
       await this.settings.load();
+
+      this.renderChart({
+        active: this.settings.active,
+        running: this.settings.running,
+      });
     });
 
     await this.settings.load();
@@ -74,17 +79,15 @@ class PopupController {
     this.elRemaining.textContent = `${this.remainingSeconds} s`;
   }
 
-  renderChart (message) {
-    const { chart } = this;
-    const { runningDuration, breakingDuration } = this.settings;
-    const { duration } = message;
-    chart.render({
-      runningDuration,
-      breakingDuration,
-      active: message.active,
-      running: message.running,
+  renderChart (message = {}) {
+    const duration = 'duration' in message ? message.duration : 0;
+    this.chart.render({
+      runningDuration: this.settings.runningDuration,
+      breakingDuration: this.settings.breakingDuration,
+      active: 'active' in message ? message.active : this.active,
+      running: 'running' in message ? message.running : this.running,
       duration,
-      elapsed: duration - message.remaining,
+      elapsed: 'elapsed' in message ? duration - message.remaining : 0,
     });
   }
 
