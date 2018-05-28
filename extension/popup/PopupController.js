@@ -58,6 +58,8 @@ class PopupController {
 
     await this.settings.load();
     this.renderChart();
+
+    this.stopChime();
   }
 
   initChart () {
@@ -101,6 +103,12 @@ class PopupController {
   stop () {
     browser.runtime.sendMessage({
       type: 'TIMER_STOP',
+    });
+  }
+
+  stopChime () {
+    browser.runtime.sendMessage({
+      type: 'CHIME_STOP',
     });
   }
 
