@@ -1,3 +1,5 @@
+/* globals ScheduleChart */
+
 // eslint-disable-next-line no-unused-vars
 class SettingsPageController {
   constructor ({ settings }) {
@@ -5,12 +7,17 @@ class SettingsPageController {
 
     this.elRunningDurationMin = document.querySelector('#runningDurationMin');
     this.elBreakingDurationMin = document.querySelector('#breakingDurationMin');
+    this.elTotalDurationMin = document.querySelector('#totalDurationMin');
     this.elPlayChime = document.querySelector('#playChime');
     this.elChimeVolume = document.querySelector('#chimeVolume');
     this.elChimeVolumeValue = document.querySelector('#chimeVolumeValue');
   }
 
   async start () {
+    this.chart = new ScheduleChart({
+      el: document.querySelector('#scheduleChart'),
+    });
+
     this.elRunningDurationMin.oninput = () => {
       this.save();
     };
@@ -29,17 +36,36 @@ class SettingsPageController {
       this.render();
     };
 
+    browser.storage.onChanged.addListener(async () => {
+      await this.settings.load();
+      this.render();
+    });
+
     await this.settings.load();
     this.render();
   }
 
   render () {
-    this.elRunningDurationMin.value = this.settings.runningDurationMin;
-    this.elBreakingDurationMin.value = this.settings.breakingDurationMin;
-    this.elPlayChime.checked = this.settings.playChime;
-    this.elChimeVolume.value = this.settings.chimeVolume;
-    this.elChimeVolume.disabled = !this.settings.playChime;
-    this.elChimeVolumeValue.textContent = this.settings.chimeVolume;
+    const s = this.settings;
+    const { runningDurationMin, breakingDurationMin } = s;
+
+    this.elRunningDurationMin.value = runningDurationMin;
+    this.elBreakingDurationMin.value = breakingDurationMin;
+    this.elTotalDurationMin.textContent = runningDurationMin + breakingDurationMin;
+    this.elPlayChime.checked = s.playChime;
+    this.elChimeVolume.value = s.chimeVolume;
+    this.elChimeVolume.disabled = !s.playChime;
+    this.elChimeVolumeValue.textContent = s.chimeVolume;
+
+    this.renderChart();
+  }
+
+  renderChart () {
+    this.chart.render({
+      runningDuration: this.settings.runningDuration,
+      breakingDuration: this.settings.breakingDuration,
+      active: false,
+    });
   }
 
   async save () {

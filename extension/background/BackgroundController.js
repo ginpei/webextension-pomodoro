@@ -37,6 +37,8 @@ class BackgroundController {
         this.timer.start();
       } else if (message.type === 'TIMER_STOP') {
         this.timer.stop();
+      } else if (message.type === 'CHIME_STOP') {
+        this.stopChime();
       }
     });
   }
@@ -89,6 +91,7 @@ class BackgroundController {
     const message = {
       type: 'TIMER_TICK',
       remaining: timer.remaining,
+      duration: timer.duration,
       active: timer.active,
       running: timer.running,
       breaking: timer.breaking,

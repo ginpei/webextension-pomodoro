@@ -3,17 +3,17 @@
 describe('PomodoroTimer', () => {
   const { expect } = chai;
 
-  const min25 = 25 * 60 * 1000; // 25 min
-  const min5 = 5 * 60 * 1000; // 5 min
+  const min = 1 * 60 * 1000; // 1 min
 
   let settings;
   let timer;
 
   beforeEach(() => {
     settings = new Settings();
-    settings.runningDuration = min25;
-    settings.breakingDuration = min5;
+    settings.runningDuration = 25 * min;
+    settings.breakingDuration = 5 * min;
     timer = new PomodoroTimer(settings);
+    timer.tickInterval = min;
   });
 
   describe('start()', () => {
@@ -54,26 +54,22 @@ describe('PomodoroTimer', () => {
     });
 
     it('starts breaking later', () => {
-      timer.stopTicking(); // illegal but makes test faster
-
-      clock.tick(min25);
+      clock.tick(25 * min);
       expect(timer.running).to.eql(false);
       expect(timer.breaking).to.eql(true);
     });
 
     it('restarts running after breaking', () => {
-      timer.stopTicking(); // illegal but makes test faster
-
-      clock.tick(min25);
-      clock.tick(min5);
+      clock.tick(25 * min);
+      clock.tick(5 * min);
       expect(timer.running).to.eql(true);
       expect(timer.breaking).to.eql(false);
     });
 
     it('calls tick event listener many times', () => {
-      clock.tick(1000);
+      clock.tick(5 * min);
       const spy = timer.onTick;
-      expect(spy).to.have.been.callCount(11);
+      expect(spy).to.have.been.callCount(1 + 5);
     });
   });
 
@@ -118,8 +114,7 @@ describe('PomodoroTimer', () => {
 
     it('stops breaking if breaking', () => {
       timer.start();
-      timer.stopTicking(); // illegal but makes test faster
-      clock.tick(min25);
+      clock.tick(25 * min);
       expect(timer.breaking).to.eql(true);
       timer.stop();
 
@@ -134,7 +129,7 @@ describe('PomodoroTimer', () => {
     it('stops ticking', () => {
       const spy = timer.onTick;
       spy.resetHistory();
-      clock.tick(min5);
+      clock.tick(5 * min);
 
       expect(spy).to.have.been.callCount(0);
     });
