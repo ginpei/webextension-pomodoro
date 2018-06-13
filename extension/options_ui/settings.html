@@ -19,6 +19,13 @@
         <th>Breaking Time</th>
         <td><input id="breakingDurationMin" type="number" min="1" /> min</td>
       </tr>
+      <tr>
+        <th>Schedule</th>
+        <td>
+          <canvas id="scheduleChart" width="200" height="200" viewbox="0 0 200 200"></canvas>
+          <div>Total <span id="totalDurationMin"></span> min cycle.</div>
+        </td>
+      </tr>
     </tbody>
   </table>
   <table class="settingsTable">
@@ -50,6 +57,7 @@
   </table>
   <script src="/vendor/webextension-polyfill/browser-polyfill.min.js"></script>
   <script src="/lib/Settings.js"></script>
+  <script src="/popup/ScheduleChart.js"></script>
   <script src="/options_ui/SettingsPageController.js"></script>
   <script src="/options_ui/main.js"></script>
 </body>
