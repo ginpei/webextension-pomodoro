@@ -1,12 +1,15 @@
 // eslint-disable-next-line no-unused-vars
 class PomodoroTimer {
   get status () {
+    let status;
     if (this.running) {
-      return this.STATUS_RUNNING;
+      status = this.STATUS_RUNNING;
     } else if (this.breaking) {
-      return this.STATUS_BREAKING;
+      status = this.STATUS_BREAKING;
+    } else {
+      status = this.STATUS_OFF;
     }
-    return this.STATUS_OFF;
+    return status;
   }
 
   get active () {
