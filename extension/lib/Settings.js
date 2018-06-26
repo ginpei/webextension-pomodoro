@@ -3,6 +3,7 @@ class Settings {
   set runningDurationMin (durationMin) {
     this.runningDuration = durationMin * 60 * 1000;
   }
+
   get runningDurationMin () {
     return Math.floor(this.runningDuration / 60 / 1000);
   }
@@ -10,6 +11,7 @@ class Settings {
   set breakingDurationMin (durationMin) {
     this.breakingDuration = durationMin * 60 * 1000;
   }
+
   get breakingDurationMin () {
     return Math.floor(this.breakingDuration / 60 / 1000);
   }
