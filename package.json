@@ -12,7 +12,7 @@
     "test-travis": "testem ci --launch Firefox"
   },
   "dependencies": {
-    "webextension-polyfill": "^0.3.0"
+    "webextension-polyfill": "^0.4.0"
   },
   "devDependencies": {
     "eslint": "^5.0.1",
@@ -20,7 +20,7 @@
     "eslint-plugin-import": "^2.11.0",
     "sinon": "^7.3.1",
     "sinon-chai": "^3.0.0",
-    "sinon-chrome": "^2.3.2",
+    "sinon-chrome": "^3.0.0",
     "testem": "^2.2.1"
   }
 }
