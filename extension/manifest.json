@@ -20,20 +20,6 @@
     "page": "background/index.html",
     "persistent": true
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*/*"
-      ],
-      "run_at": "document_end",
-      "js": [
-        "content_scripts/main.js"
-      ],
-      "css": [
-        "content_scripts/main.css"
-      ]
-    }
-  ],
   "options_page": "options_ui/settings.html",
   "options_ui": {
     "page": "options_ui/settings.html",
