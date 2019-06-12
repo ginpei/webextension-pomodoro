@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "1.0.0",
   "scripts": {
     "build": "npm run install-vendor",
     "clean": "rm -f extension.zip",
@@ -22,6 +23,5 @@
     "sinon-chai": "^3.0.0",
     "sinon-chrome": "^3.0.0",
     "testem": "^2.2.1"
-  },
-  "version": "1.0.0"
+  }
 }
