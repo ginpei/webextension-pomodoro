@@ -22,5 +22,6 @@
     "sinon-chai": "^3.0.0",
     "sinon-chrome": "^3.0.0",
     "testem": "^2.2.1"
-  }
+  },
+  "version": "1.0.0"
 }
