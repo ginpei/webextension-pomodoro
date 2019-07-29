@@ -1,5 +1,6 @@
 {
   "private": true,
+  "name": "pomodoro",
   "version": "1.0.1",
   "scripts": {
     "build": "npm run install-vendor",
