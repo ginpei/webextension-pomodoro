@@ -17,7 +17,7 @@
     "webextension-polyfill": "^0.4.0"
   },
   "devDependencies": {
-    "eslint": "^6.0.0",
+    "eslint": "^6.2.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.11.0",
     "sinon": "^7.3.1",
